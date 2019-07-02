@@ -2,7 +2,6 @@ package com.codecool.web.servlet;
 
 
 import com.codecool.web.dao.database.DataBaseTasksDao;
-import com.codecool.web.model.Task2;
 import com.codecool.web.model.Task3;
 import com.codecool.web.service.TaskFilterService;
 import com.codecool.web.service.TaskService;
@@ -25,15 +24,15 @@ public class Task3Servlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             DataBaseTasksDao taskDao = new DataBaseTasksDao(connection);
             TaskService taskService = new SimpleTaskService(taskDao);
             List<Task3> task1List = taskService.Task3Service();
-            req.setAttribute("task3",task1List);
-            req.getRequestDispatcher("Task3.jsp").forward(req,resp);
-        }catch (SQLException ex){
+            req.setAttribute("task3", task1List);
+            req.getRequestDispatcher("Task3.jsp").forward(req, resp);
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }catch (ServiceException ex){
+        } catch (ServiceException ex) {
             ex.printStackTrace();
         }
     }
@@ -43,17 +42,17 @@ public class Task3Servlet extends AbstractServlet {
         String param = req.getParameter("text");
 
         resp.setContentType("text/html;charset=UTF-8");
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             DataBaseTasksDao taskDao = new DataBaseTasksDao(connection);
             TaskService taskService = new SimpleTaskService(taskDao);
             List<Task3> task1List = taskService.Task3Service();
             TaskFilterService tfs = new TaskFilterService();
-            List<Task3> filteredList = tfs.Task3Filter(task1List,param);
-            req.setAttribute("task3",filteredList);
-            req.getRequestDispatcher("Task3.jsp").forward(req,resp);
-        }catch (SQLException ex){
+            List<Task3> filteredList = tfs.Task3Filter(task1List, param);
+            req.setAttribute("task3", filteredList);
+            req.getRequestDispatcher("Task3.jsp").forward(req, resp);
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }catch (ServiceException ex){
+        } catch (ServiceException ex) {
             ex.printStackTrace();
         }
 

@@ -23,15 +23,15 @@ public class Task1Servlet extends AbstractServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             DataBaseTasksDao taskDao = new DataBaseTasksDao(connection);
             TaskService taskService = new SimpleTaskService(taskDao);
             List<Task1> task1List = taskService.Task1Service();
-            req.setAttribute("task1",task1List);
-            req.getRequestDispatcher("Task1.jsp").forward(req,resp);
-        }catch (SQLException ex){
+            req.setAttribute("task1", task1List);
+            req.getRequestDispatcher("Task1.jsp").forward(req, resp);
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }catch (ServiceException ex){
+        } catch (ServiceException ex) {
             ex.printStackTrace();
         }
 
@@ -46,28 +46,28 @@ public class Task1Servlet extends AbstractServlet {
         String param = req.getParameter("text");
         String param2 = req.getParameter("dropdown");
 
-        if (param2.equals("product")){
+        if (param2.equals("product")) {
             company = "";
             product = param;
-        } else if (param2.equals("company")){
+        } else if (param2.equals("company")) {
             product = "";
             company = param;
-        }else {
+        } else {
             product = "";
             company = "";
         }
         resp.setContentType("text/html;charset=UTF-8");
-        try(Connection connection = getConnection(req.getServletContext())) {
+        try (Connection connection = getConnection(req.getServletContext())) {
             DataBaseTasksDao taskDao = new DataBaseTasksDao(connection);
             TaskService taskService = new SimpleTaskService(taskDao);
             List<Task1> task1List = taskService.Task1Service();
             TaskFilterService tfs = new TaskFilterService();
-            List<Task1> filteredTasks = tfs.Task1Filter(task1List,product,company);
-            req.setAttribute("task1",filteredTasks);
-            req.getRequestDispatcher("Task1.jsp").forward(req,resp);
-        }catch (SQLException ex){
+            List<Task1> filteredTasks = tfs.Task1Filter(task1List, product, company);
+            req.setAttribute("task1", filteredTasks);
+            req.getRequestDispatcher("Task1.jsp").forward(req, resp);
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }catch (ServiceException ex){
+        } catch (ServiceException ex) {
             ex.printStackTrace();
         }
 
